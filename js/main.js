@@ -103,7 +103,7 @@ function updateProperty(property, element) {
             flexGridify.resetBreakpoints();
             break;
         case "breakpointCallback":
-            FlexGridify[property] = function () {
+            flexGridify[property] = function () {
                 updateDisplay();
                 eval(element.value);
             };

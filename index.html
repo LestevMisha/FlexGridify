@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlexGridify</title>
+    <link rel="stylesheet" href="./main.css">
+    <link rel="icon" type="images/x-icon" href="./img/logo.png" />
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="flex h gap mb-3">
+            <div class="flex v w50 mob">
+                <div class="flex h gap align mob">
+                    <img class="logo" src="./img/logo.png" alt="logo">
+                    <h1 class="tcmob">FlexGridify <span class="b-text b-text_grey-dark">2024</span></h1>
+                </div>
+                <div class="b-text b-text_grey-dark tcmob mt-05">
+                    FlexGridify is a responsive flex layout library that dynamically adjusts column count and spacing
+                    for flexible, adaptive designs. Use the resize button in the bottom left corner to drive.
+                </div>
+            </div>
+        </div>
+
+        <div class="flex h gap gap_3_mob mob_reverse">
+            <div class="flex v gap w25 mob">
+
+                <a class="flex h align fit v1" href="https://github.com/LestevMisha/FlexGridify" target="_blank">
+                    <div class="b-text b-text_08 b-text_grey-dark">
+                        Documentation
+                    </div>
+                    <img src="./img/arrow-right.svg" alt="arrow-right" class="doc-btn">
+                </a>
+
+                <div class="flex v" id="flexGridifyPropertiesStuck">
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <input class="modern-blox v3" id="logQueryInput">
+                            <div class="modern-blox-label">
+                                logQuery
+                                <span class="hint">(bool)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Open DevTool (Press F12) and go to Console, now resize the FlexGridify, if `logQuery` is set
+                            to `true` it will log out different breakpoints.
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <input class="modern-blox v3" id="unitInput">
+                            <div class="modern-blox-label">
+                                unit
+                                <span class="hint">(str)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Recieves `px` or `em` units. It will affect `gap`, `marginTop` and `marginBottom`.
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <input class="modern-blox v3" id="smoothInput">
+                            <div class="modern-blox-label">
+                                smooth
+                                <span class="hint">(str)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Solves <a class="b-text b-text_grey-dark" target="_blank"
+                                href="https://github.com/LestevMisha/FlexGridify?tab=readme-ov-file#3-flash-of-unstyled-content-problem">FOUC</a>
+                            Problem. Can be seen only when page is reloaded.
+                            <i>This option will be available soon for the test</i>
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <input class="modern-blox v3" id="gapInput">
+                            <div class="modern-blox-label">
+                                gap
+                                <span class="hint">(num)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Sets a `gap` between elements within FlexGridify.
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <input class="modern-blox v3" id="marginTopInput">
+                            <div class="modern-blox-label">
+                                marginTop
+                                <span class="hint">(num)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Sets a `margin-top` for each element within FlexGridify.
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <input class="modern-blox v3" id="marginBottomInput">
+                            <div class="modern-blox-label">
+                                marginBottom
+                                <span class="hint">(num)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Sets a `margin-bottom` for each element within FlexGridify.
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <input class="modern-blox v3" id="defaultColumnAmountInput">
+                            <div class="modern-blox-label">
+                                defaultColumnAmount
+                                <span class="hint">(num)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Sets the default amount of columns in case if no `breakpointColumns` matches the current
+                            window/element size or if 'responsive' is set to `false`.
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <input class="modern-blox v3" id="responsiveInput">
+                            <div class="modern-blox-label">
+                                responsive
+                                <span class="hint">(bool)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Disables `breakpointColumns` (media queries).
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <textarea class="modern-blox modern-blox_textarea v3"
+                                id="breakpointColumnsTextarea"></textarea>
+                            <div class="modern-blox-label">
+                                breakpointColumns
+                                <span class="hint">(obj)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Sets a media query and corresponding amount of columns for the FlexGridify. Uses `min-width`
+                            query. Can be affected by the `breakpointSelector` and `relative` parameters. For no mathing
+                            query `defaultColumnAmount` will be used.
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <input class="modern-blox v3" id="dynamicHeight">
+                            <div class="modern-blox-label">
+                                dynamicHeight
+                                <span class="hint">(bool)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Automatically updates height if it's changed within the FlexGridify. (If text of the child
+                            will wrap or if child will change its height it will result an overall overflow of
+                            FlexGridify and can lead to unexpected behaviour when `dynamicHeight` is set to `false`)
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <input class="modern-blox v3" id="breakpointSelectorInput">
+                            <div class="modern-blox-label">
+                                breakpointSelector
+                                <span class="hint">(str)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Sets an element that will be observed for the media queries (breakpointColumns). By default
+                            is set to the main screen ("window") can be set to any element.
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <textarea class="modern-blox modern-blox_textarea v3"
+                                id="breakpointCallbackTextarea"></textarea>
+                            <div class="modern-blox-label">
+                                breakpointCallback
+                                <span class="hint">(code)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Calls a callback function when media query is triggered.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex v gap flex_light-border-left mob">
+
+                <div class="flex h gap_05 mob">
+                    <div class="b-text b-text_08 b-text_grey-dark v1">
+                        Width x Height:
+                        <span id="currentDimensions">-</span>
+                    </div>
+                    <div class="b-text b-text_08 b-text_grey-dark v1">
+                        Breakpoint:
+                        <span id="currentBreakpoint">-</span>
+                    </div>
+                    <div class="flex h gap">
+                        <div class="b-text b-text_08 b-text_grey-dark v1">
+                            Column Amount:
+                            <span id="currentColumnAmount">-</span>
+                        </div>
+                        <div class="b-text b-text_08 b-text_grey-dark v1">
+                            Font-size:
+                            <span id="currentFontSize">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="element flexGridify flexGridify_init">
+                    <div class="flex v ds-row">
+                        <div class="back_num">1</div>
+                        <div class="b-text b-text_08 emphasize crystal-blue">
+                            Remember the Sabbath day, and keep it holy. Six days you shall labor and do all your work.
+                            But the seventh day is a sabbath to the Lord your God; you shall not do any work
+                        </div>
+                    </div>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">2</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                Whoever pursues righteousness and love finds life, prosperity and
+                                honor.
+                            </div>
+                            <div class="modern-blox-label">Proverbs 21:21</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">3</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                I sought the LORD, and He answered me and delivered me from all my fears.
+                                <br />
+                                Those who look to Him are radiant, and their faces shall never be ashamed.
+                                <br /><br />
+                                Oh, taste and see that the LORD is good!
+                                Blessed is the man who takes refuge in Him!
+                            </div>
+                            <div class="modern-blox-label">Psalm 34:4–5, 8</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">4</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                I have told you these things, so that in me you may have peace. In this world you
+                                will have trouble. But take heart! I have overcome the world.
+                            </div>
+                            <div class="modern-blox-label">John 16:33</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">5</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                A friend loves at all times, and a brother is born for a time of adversity.
+                            </div>
+                            <div class="modern-blox-label">Proverbs 17:17</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">6</div>
+
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                As the deer pants for the water brooks, So pants my soul for You, O God.
+                            </div>
+                            <div class="modern-blox-label">Psalm 42:1</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">7</div>
+
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                I have stored up your word in my heart, that I might not sin against you.
+                            </div>
+                            <div class="modern-blox-label">Psalm 119:11</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">8</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                When I am afraid, I put my trust in you.
+                            </div>
+                            <div class="modern-blox-label">Psalms 56:3</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">9</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                So we do not lose heart. Though our outer self is wasting away, our inner self is
+                                being renewed day by day.
+                                <br /><br />
+                                For this light momentary affliction is preparing for us an eternal weight of
+                                glory beyond all comparison, as we look not to the things that are seen but to the
+                                things that are unseen.
+                                <br /><br />
+                                For the things that are seen are transient, but the things that are unseen are
+                                eternal.
+                            </div>
+                            <div class="modern-blox-label">2 Corinthians 4:16-18</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">10</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                The steadfast love of the Lord never ceases; his mercies never come to an end; they
+                                are new every morning; great is your faithfulness.
+                            </div>
+                            <div class="modern-blox-label">Lamentations 3:22-23</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">11</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                Trust in the Lord with all your heart, and do not lean on your own understanding. In
+                                all your ways acknowledge him, and he will make straight your paths.
+                            </div>
+                            <div class="modern-blox-label">Proverbs 3:5-6</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">12</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                For I know the plans I have for you, declares the Lord, plans for welfare and not
+                                for evil, to give you a future and a hope.
+                            </div>
+                            <div class="modern-blox-label">Jeremiah 29:11</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">13</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                Cast all your anxiety on him because he cares for you.
+                            </div>
+                            <div class="modern-blox-label">1 Peter 5:7</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">14</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                He says, “Be still, and know that I am God; I will be exalted among the nations, I
+                                will be exalted in the earth.”
+                            </div>
+                            <div class="modern-blox-label">Psalm 46:10</div>
+                        </div>
+                    </label>
+
+                    <div class="flex v ds-row">
+                        <div class="back_num">15</div>
+                        <div class="b-text b-text_08 emphasize crystal-blue">
+                            I put the Bible verses here, because I believe God wanted me that
+                            <u>
+                                anyone who sees this library would see them.
+                            </u>
+                        </div>
+                    </div>
+
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">16</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                Renounce your sins by doing what is right, and your wickedness by being kind to the
+                                oppressed. It may be that then..
+                            </div>
+                            <div class="modern-blox-label">Daniel & Nebuchadnezzar</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">18</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                O people, the Lord has told you what is good, and this is what he requires of you:
+                                to do
+                                what is
+                                right, to love mercy, and to walk humbly with your God.
+                            </div>
+                            <div class="modern-blox-label">Micah 6:8</div>
+                        </div>
+                    </label>
+
+                    <label class="modern-blox-wrapper">
+                        <div class="back_num">19</div>
+                        <div class="modern-blox">
+                            <div class="b-text b-text_grey-dark">
+                                For if you forgive others their trespasses, your heavenly Father will
+                                also forgive you.
+                            </div>
+                            <div class="modern-blox-label">Matthew 6:14</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./bundle.js"></script>
+    <script src="./js/pages.js"></script>
+    <script src="./js/main.js"></script>
+
+</body>
+
+</html>

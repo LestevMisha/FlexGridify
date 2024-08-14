@@ -360,10 +360,14 @@ class FlexGridify {
     #reload(isBreakpoint = false, breakpoint = null) {
         // fire breakpoint callback
         if (isBreakpoint && this.breakpointCallback) {
-            if (this.logQuery) {
+            if (this.logQuery && breakpoint) {
                 console.log("%cThreshold:", "color: #0d6efd;", breakpoint);
             }
             this.breakpointCallback();
+        } else {
+            if (this.logQuery && breakpoint) {
+                console.log("%cThreshold:", "color: #0d6efd;", breakpoint);
+            }
         }
         const numCols = this.getColumnCount();
 

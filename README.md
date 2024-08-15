@@ -61,8 +61,6 @@ This approach is universal and works for all use cases.
     <script>
         const flexGridify = new FlexGridify(".flexgridify", {
             breakpointSelector: ".flexgridify",
-            defaultColumnAmount: 2,
-            responsive: false,
         });
     </script>
 </body>
@@ -103,8 +101,6 @@ Use it if you ran `npm install flexgridify`. This is just a showcase of some qui
     <script>
         const flexGridify = new FlexGridify(".flexgridify", {
             breakpointSchildector: ".flexgridify",
-            defaultColumnAmount: 2,
-            responsive: false,
         });
     </script>
 </body>
@@ -159,8 +155,6 @@ To improve the user experience and hide JavaScript initialization, you should:
     <script>
         const flexGridify = new FlexGridify(".flexGridify", {
             breakpointSelector: ".flexGridify",
-            defaultColumnAmount: 2,
-            responsive: false,
             smooth: true, // reveals it only when initialized
         });
     </script>

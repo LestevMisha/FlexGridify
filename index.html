@@ -156,8 +156,8 @@
 
                     <div class="flex v mb-1">
                         <label class="modern-blox-wrapper">
-                            <textarea class="modern-blox modern-blox_textarea v3"
-                                id="breakpointColumnsTextarea"></textarea>
+                            <textarea class="modern-blox modern-blox_textarea v3" id="breakpointColumnsTextarea"
+                                data-textarea-indent="true"></textarea>
                             <div class="modern-blox-label">
                                 breakpointColumns
                                 <span class="hint">(obj)</span>
@@ -168,6 +168,35 @@
                             Sets a media query and corresponding amount of columns for the FlexGridify. Uses `min-width`
                             query. Can be affected by the `breakpointSelector` and `relative` parameters. For no mathing
                             query `defaultColumnAmount` will be used.
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <input class="modern-blox v3" id="dragAndDropInput">
+                            <div class="modern-blox-label">
+                                dragAndDrop
+                                <span class="hint">(bool)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Enables drag-and-drop (dnd) functionality.
+                        </div>
+                    </div>
+
+                    <div class="flex v mb-1">
+                        <label class="modern-blox-wrapper">
+                            <textarea class="modern-blox modern-blox_textarea v3" id="dndAnimateTextarea"
+                                data-textarea-indent="true"></textarea>
+                            <div class="modern-blox-label">
+                                dndAnimate
+                                <span class="hint">(obj)</span>
+                            </div>
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                        </label>
+                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                            Takes an object's properties and uses them to animate drag-and-drop functionality.
                         </div>
                     </div>
 
@@ -204,11 +233,11 @@
 
                     <div class="flex v mb-1">
                         <label class="modern-blox-wrapper">
-                            <textarea class="modern-blox modern-blox_textarea v3"
-                                id="breakpointCallbackTextarea"></textarea>
+                            <textarea class="modern-blox modern-blox_textarea v3" id="breakpointCallbackTextarea"
+                                data-textarea-indent="false"></textarea>
                             <div class="modern-blox-label">
                                 breakpointCallback
-                                <span class="hint">(code)</span>
+                                <span class="hint">(code/string)</span>
                             </div>
                             <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
                         </label>

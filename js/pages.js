@@ -36,11 +36,12 @@ sendBtns.forEach(sendBtn => {
 
 // 4. Textarea Handling: Adjust Height and Indentation
 const textareas = document.querySelectorAll("textarea");
-const breakpointColumnsTextarea = document.getElementById("breakpointColumnsTextarea");
 
 textareas.forEach(textarea => {
+    const textareaIndent = textarea.getAttribute("data-textarea-indent");
+
     textarea.addEventListener('keyup', adjustTextareaHeight);
-    if (textarea === breakpointColumnsTextarea) {
+    if (textareaIndent) {
         textarea.addEventListener('keydown', addIndentationOnEnter.bind(textarea, true));
     } else {
         textarea.addEventListener('keydown', addIndentationOnEnter.bind(textarea, false));

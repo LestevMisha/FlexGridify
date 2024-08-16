@@ -3,6 +3,7 @@ const flexGridify = new FlexGridify(".element", {
     logQuery: true,
     unit: "em",
     smooth: true,
+    dragAndDrop: true,
     responsive: true,
     breakpointColumns: {
         "min-width: 1500px": 3,
@@ -66,21 +67,23 @@ function handleKeyPress(property, element) {
 
 // Update property and apply changes
 function updateProperty(property, element) {
-    const value = property === "breakpointColumns" || property === "breakpointCallback"
-        ? parseValue(property, element.value)
-        : property === "dynamicHeight"
-            ? element.value === "true"
-            : property === "logQuery" || property === "responsive"
-                ? element.value === "true"
-                : property === "gap" || property === "marginTop" || property === "marginBottom" || property === "defaultColumnAmount"
-                    ? parseInt(element.value)
-                    : element.value;
+    const value = (
+        (property === "breakpointColumns" || property === "breakpointCallback" || property === "dndAnimate") ? parseValue(property, element.value)
+            :
+            (property === "dynamicHeight" || property === "logQuery" || property === "responsive" || property === "dragAndDrop") ? element.value === "true"
+                :
+                (property === "gap" || property === "marginTop" || property === "marginBottom" || property === "defaultColumnAmount") ? parseInt(element.value)
+                    :
+                    // unit, breakpointSelector
+                    element.value
+    );
 
+    // logQuery, dndAnimate
     flexGridify[property] = value;
 
     switch (property) {
+        // case "smooth":
         case "unit":
-        case "smooth":
         case "gap":
         case "marginTop":
         case "marginBottom":
@@ -99,6 +102,9 @@ function updateProperty(property, element) {
         case "dynamicHeight":
             value ? flexGridify.connectDynamicObservers() : flexGridify.disconnectDynamicObservers();
             break;
+        case "dragAndDrop":
+            value ? flexGridify.reinitDragAndDrop() : flexGridify.cleanupDndListeners();
+            break;
         case "breakpointSelector":
             flexGridify.resetBreakpoints();
             break;
@@ -113,5 +119,5 @@ function updateProperty(property, element) {
 
 // Parse JSON value if applicable
 function parseValue(property, value) {
-    return property === "breakpointColumns" ? JSON.parse(value) : value;
+    return property === "breakpointCallback" ? value : JSON.parse(value);
 }

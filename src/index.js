@@ -1,4 +1,6 @@
 import matchElementMedia from "./components/matchElementMedia.mjs";
+import swapElements from "./components/swapElements.mjs";
+import { addProperties, removeProperties } from "./components/addRemoveProperties.mjs";
 import * as css from "./main.css";
 
 class FlexGridify {
@@ -7,6 +9,11 @@ class FlexGridify {
         this.defaultOptions = {
             logQuery: false,
             smooth: false,
+            dragAndDrop: false,
+            dndAnimate: {
+                opacity: 0.5,
+                transform: "translate(0.25em, -0.25em)",
+            },
             unit: "em",
             gap: 1,
             marginTop: 0,
@@ -36,6 +43,9 @@ class FlexGridify {
         if (this.smooth) {
             this.element.classList.remove('flexGridify_init');
         }
+        if (this.dragAndDrop) {
+            this.#setupDragAndDrop();
+        }
     }
 
 
@@ -58,13 +68,13 @@ class FlexGridify {
     getCurrentBreakpointQuery() {
         if (this.responsive) {
             for (const [breakpoint, cols] of Object.entries(this.breakpointColumns)) {
-                if (this.breakpointElement === "window") {
+                if (this.#breakpointElement === "window") {
                     if (window.matchMedia(`(${breakpoint})`).matches) {
                         return breakpoint;
                     }
                 } else {
                     const breakpointValue = parseFloat(breakpoint.match(/(\d+)/g)[0]);
-                    const currentWidth = parseFloat(window.getComputedStyle(this.breakpointElement).width);
+                    const currentWidth = parseFloat(window.getComputedStyle(this.#breakpointElement).width);
                     if (currentWidth > breakpointValue) {
                         return breakpoint;
                     }
@@ -142,7 +152,7 @@ class FlexGridify {
                     }
                 } else {
                     const breakpointValue = parseFloat(breakpoint.match(/(\d+)/g)[0]);
-                    const currentWidth = parseFloat(window.getComputedStyle(this.breakpointElement).width);
+                    const currentWidth = parseFloat(window.getComputedStyle(this.#breakpointElement).width);
                     if (currentWidth > breakpointValue) {
                         return cols;
                     }
@@ -274,18 +284,6 @@ class FlexGridify {
         this.#setupBreakpointListener();
     }
 
-    /*
-     * ---------------------------------------------------------------------------------------->
-     * ---------------------------------------------------------------------------------------->
-     * --------------------------------PRIVATE HELPER METHODS---------------------------------->
-     * ---------------------------------------------------------------------------------------->
-     * ---------------------------------------------------------------------------------------->
-     */
-
-
-
-
-
     // removes all breakpoint listeners
     cleanupBreakpointListeners() {
         // Cleanup media query listeners
@@ -302,6 +300,42 @@ class FlexGridify {
             this.#breakpointResizeObserverCleanup = null;
         }
     }
+
+    cleanupDndListeners() {
+        this.#dndListenersForCleanup.forEach((listener, event) => {
+            this.element.removeEventListener(event, listener);
+        });
+        this.#dndListenersForCleanup.clear();
+
+        Array.from(this.element.children).forEach(child => {
+            child.removeAttribute('draggable');
+        });
+    }
+
+    // re-initializes drag-and-drop functionality
+    reinitDragAndDrop() {
+        Array.from(this.element.children).forEach(child => {
+            child.setAttribute('draggable', 'true');
+        });
+        this.#setupDragAndDrop();
+    }
+
+
+
+
+
+
+    /*
+     * ---------------------------------------------------------------------------------------->
+     * ---------------------------------------------------------------------------------------->
+     * --------------------------------PRIVATE HELPER METHODS---------------------------------->
+     * ---------------------------------------------------------------------------------------->
+     * ---------------------------------------------------------------------------------------->
+     */
+
+
+
+
 
     // removes every break from the element
     #clearColumnBreaks() {
@@ -389,6 +423,9 @@ class FlexGridify {
             if (this.dynamicHeight) {
                 this.#dynamicHeightUpdater(child);
             }
+            if (this.dragAndDrop) {
+                child.setAttribute('draggable', 'true');
+            }
         });
         this.#reload();
     }
@@ -416,7 +453,7 @@ class FlexGridify {
                 const matches = breakpointKey.match(/\d+/);
                 return parseFloat(matches[0], 10);
             }).sort((a, b) => a - b);
-            const cleanup = matchElementMedia(this.breakpointElement, numericBreakpointsArray, boundReload);
+            const cleanup = matchElementMedia(this.#breakpointElement, numericBreakpointsArray, boundReload);
 
             // keep for cleanup
             this.#breakpointResizeObserverCleanup = cleanup;
@@ -460,37 +497,101 @@ class FlexGridify {
     }
 
     /*
+    * Drag And Drop (DND)
+    * Enables drag and drop for children/Switch places
+    */
+    #setupDragAndDrop() {
+        let draggedItem, enteredItem;
+
+        const handleDragStart = (e) => {
+            draggedItem = e.target.closest(".flexGridify-item");
+        }
+
+        const handleDragEnter = (e) => {
+            enteredItem = e.target.closest(".flexGridify-item");
+            if (enteredItem) {
+                addProperties(enteredItem, this.dndAnimate);
+            }
+        }
+
+        const prevent = (e) => {
+            e.preventDefault();
+        }
+
+        const handleDragLeave = (e) => {
+            const currentLeftItem = e.target.closest(".flexGridify-item");
+            if (currentLeftItem === null) return;
+            if (currentLeftItem === enteredItem) return;
+            if (currentLeftItem === draggedItem) return;
+
+            removeProperties(currentLeftItem, Object.keys(this.dndAnimate));
+        }
+
+        const handleDrop = (e) => {
+            const currentlyEnteredItem = e.target.closest(".flexGridify-item");
+            if (currentlyEnteredItem === null) return;
+
+            removeProperties(currentlyEnteredItem, Object.keys(this.dndAnimate));
+            swapElements(draggedItem, currentlyEnteredItem);
+            this.applyHeightChange();
+        }
+
+        const handleDragEnd = (e) => {
+            removeProperties(draggedItem, Object.keys(this.dndAnimate));
+        }
+
+
+        const listeners = [
+            ["dragstart", handleDragStart],
+            ["dragenter", handleDragEnter],
+            ["dragleave", handleDragLeave],
+            ["dragover", prevent],
+            ["drop", handleDrop],
+            ["dragend", handleDragEnd],
+        ]
+
+        listeners.forEach(([event, listener]) => {
+            this.element.addEventListener(event, listener);
+            this.#dndListenersForCleanup.set(event, listener);
+        });
+    }
+
+    /*
      * Main parameters initialization.
      * Initializes all the properties for further use
      */
+    #dndListenersForCleanup
     #mediaQueryListenersForCleanup
     #dynamicResizeObserversForCleanup
     #breakpointResizeObserverCleanup
+    #breakpointElement
 
     #initializeParameters() {
-        const { gap, unit, smooth, marginTop, marginBottom, logQuery, dynamicHeight, breakpointSelector, defaultColumnAmount, responsive, breakpointColumns, breakpointCallback } = this.options;
+        const { gap, unit, smooth, dragAndDrop, dndAnimate, marginTop, marginBottom, logQuery, dynamicHeight, breakpointSelector, defaultColumnAmount, responsive, breakpointColumns, breakpointCallback } = this.options;
 
         // public parameters
         this.unit = unit;
         this.smooth = smooth;
+        this.dragAndDrop = dragAndDrop;
+        this.dndAnimate = dndAnimate;
         this.gap = gap;
         this.marginTop = marginTop;
         this.marginBottom = marginBottom;
         this.logQuery = logQuery;
         this.dynamicHeight = dynamicHeight;
         this.breakpointSelector = breakpointSelector;
-        this.breakpointElement = document.querySelector(this.breakpointSelector);
         this.defaultColumnAmount = defaultColumnAmount;
         this.responsive = responsive;
         this.breakpointCallback = breakpointCallback;
         this.breakpointColumns = breakpointColumns;
 
         // private parameters
+        this.#breakpointElement = document.querySelector(this.breakpointSelector);
+        this.#dndListenersForCleanup = new Map();
         this.#mediaQueryListenersForCleanup = new Map();
         this.#dynamicResizeObserversForCleanup = new Map();
         this.#breakpointResizeObserverCleanup = null;
     }
-
 
 }
 

@@ -6,7 +6,7 @@ Inspired by [Gilberton's FlexMasonry](https://github.com/gilbitron/flexmasonry) 
 
 ## Features
 
-- **Compact**: Only 20KB of JS and CSS
+- **Compact**: Less than 30KB of JS and CSS
 - **Efficient**: Utilizes CSS flexbox for fast and responsive layouts
 - **Adaptive**: Configurable breakpoints for column adjustments
 - **Masonry Effect**: Stacks elements with `height: fit-content`
@@ -253,6 +253,8 @@ const flexGrid = new FlexGridify(".your-selector", {
 - **dynamicHeight**: (boolean) — If true, the grid items' height adjusts dynamically based on their content.
 - **breakpointSelector**: (string) — CSS selector to determine breakpoint based on element width.
 - **breakpointCallback**: (function) — Callback function executed when a breakpoint is reached.
+- **dragAndDrop**: (boolean) — Enables drag-and-drop functionality for children within the FlexGridify if set to true.
+- **dndAnimate**: (object) — Defines the animation properties to apply when an item is dragged or hovered over.
 
 ## Methods
 
@@ -294,6 +296,15 @@ const flexGrid = new FlexGridify(".your-selector", {
 
 - **resetBreakpoints()**  
   Resets the breakpoint listeners based on the current settings.
+  
+- **cleanupBreakpointListeners()**  
+  Removes all breakpoint listeners and associated observers, resetting the grid's breakpoint detection.
+
+- **cleanupDndListeners()**  
+  Removes all drag-and-drop event listeners and disables drag functionality on child elements.
+
+- **reinitDragAndDrop()**  
+  Re-enables drag-and-drop functionality on child elements, initializing necessary event listeners.
 
 
 ## FAQ

@@ -9,6 +9,24 @@ body {
     box-sizing: border-box !important;
 }
 
+.fader {
+    height: 5em;
+    width: 100%;
+    z-index: 1;
+    pointer-events: none;
+    position: absolute;
+}
+
+.fader.btm {
+    bottom: 0;
+    background: linear-gradient(#00000000, #000000);
+}
+
+.fader.top {
+    top: 0;
+    background: linear-gradient(#000000a1, #00000000);
+}
+
 .flexGridify-item[draggable=true] {
     transition-property: opacity, transform;
     transition-duration: .225s;
@@ -16,9 +34,17 @@ body {
     cursor: move !important;
 }
 
+.relative {
+    position: relative;
+}
+
 .flex {
     display: flex;
     position: relative;
+}
+
+.flex.y-scroll {
+    overflow-y: scroll;
 }
 
 .flex.fit {
@@ -56,6 +82,14 @@ body {
     transition: transform .225s ease-in-out;
 }
 
+.reset-btn {
+    position: relative;
+    height: 2em;
+    width: 2em;
+    padding: 0.6em;
+    transition: transform .225s ease-in-out;
+}
+
 .send-btn {
     position: absolute;
     top: 50%;
@@ -68,7 +102,23 @@ body {
     padding: 0.25em;
     cursor: pointer;
     transition: opacity .225s ease-in-out;
-    opacity: 0;
+    opacity: 0.2;
+}
+
+textarea, input {
+    transition: all .225s ease-in-out;
+}
+
+.min-h-20em {
+    min-height: 20em;
+}
+
+input[type="checkbox"] {
+    accent-color: #BF7BFF;
+}
+
+input:focus {
+    background-color: rgb(128 128 128 / 15%) !important;
 }
 
 input:focus~.send-btn,
@@ -78,6 +128,10 @@ textarea:focus~.send-btn {
 
 input:focus~.send-btn:hover,
 textarea:focus~.send-btn:hover {
+    opacity: 0.5;
+}
+
+.send-btn:hover {
     opacity: 0.5;
 }
 
@@ -205,6 +259,14 @@ h1 {
     margin-bottom: 3em !important;
 }
 
+.mb-4 {
+    margin-bottom: 4em !important;
+}
+
+.mb-5 {
+    margin-bottom: 5em !important;
+}
+
 .ml-1 {
     margin-left: 1em !important;
 }
@@ -307,7 +369,12 @@ h1 {
     width: 100%;
     padding: 2em 1em 1em;
     border-color: #ffffff21;
-    color: #666666 !important
+    color: #666666;
+}
+
+.modern-blox-wrapper .modern-blox.input-error {
+    border: 0.1em solid #ff000021;
+    background-color: #ff00001a;
 }
 
 .modern-blox-wrapper:hover>.modern-blox-label .hint {
@@ -410,7 +477,92 @@ h1 {
 }
 
 /* For smooth appearance */
-.flexGridify.flexGridify_init {
+.flexGridify.flexGridify-init {
     opacity: 0;
     visibility: hidden;
+}
+
+.tooltip-target {
+    position: relative;
+}
+
+.tooltip-target:hover .tooltip {
+    transition: .2s all 1s ease-in-out;
+
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 10;
+    width: max-content;
+    height: auto;
+    background-color: #111111;
+    color: #393939;
+    left: 50%;
+    top: 100%;
+    margin-top: 0.75em;
+    transform: translate(-50%, 0);
+    padding: .5em 1em;
+    border-radius: .5em;
+    text-align: center;
+    transition: all .2s ease-in-out;
+    pointer-events: none;
+}
+
+.tooltip.tooltip-error {
+    visibility: visible !important;
+    opacity: 1;
+    width: 100% !important;
+    z-index: 100 !important;
+    pointer-events: all !important;
+    background-color: #180000 !important;
+    color: #a54c4c !important;
+    transition: all .5s ease-in-out !important;
+}
+
+.tooltip.tooltip-error::after {
+    border-color: transparent transparent #180000 transparent !important;
+}
+
+.tooltip::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;
+    transform: translate(-50%, 0);
+    left: 50%;
+    border-width: 0.5em;
+    border-style: solid;
+    border-color: transparent transparent #111111 transparent;
+    pointer-events: none;
+}
+
+.animate-shaking {
+    z-index: 5;
+    animation: horizontal-shaking 0.5s ease-in-out;
+}
+
+@keyframes horizontal-shaking {
+    0% {
+        transform: translateX(0)
+    }
+
+    25% {
+        transform: translateX(0.3125em)
+    }
+
+    50% {
+        transform: translateX(-0.3125em)
+    }
+
+    75% {
+        transform: translateX(0.3125em)
+    }
+
+    100% {
+        transform: translateX(0)
+    }
 }

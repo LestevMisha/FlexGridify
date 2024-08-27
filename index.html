@@ -29,223 +29,311 @@
         <div class="flex h gap gap_3_mob mob_reverse">
             <div class="flex v gap w25 mob">
 
-                <a class="flex h align fit v1" href="https://github.com/LestevMisha/FlexGridify" target="_blank">
-                    <div class="b-text b-text_08 b-text_grey-dark">
-                        Documentation
-                    </div>
-                    <img src="./img/arrow-right.svg" alt="arrow-right" class="doc-btn">
-                </a>
-
-                <div class="flex v" id="flexGridifyPropertiesStuck">
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <input class="modern-blox v3" id="logQueryInput">
-                            <div class="modern-blox-label">
-                                logQuery
-                                <span class="hint">(bool)</span>
+                <div class="flex v gap">
+                    <div class="flex h gap">
+                        <a class="flex h align fit v1 tooltip-target" href="https://github.com/LestevMisha/FlexGridify"
+                            target="_blank">
+                            <div class="b-text b-text_08 b-text_grey-dark">
+                                Documentation
                             </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Open DevTool (Press F12) and go to Console, now resize the FlexGridify, if `logQuery` is set
-                            to `true` it will log out different breakpoints.
+                            <img src="./img/arrow-right.svg" alt="arrow-right" class="doc-btn">
+                            <span class="b-text b-text_08 tooltip">Opens GitHub Docs</span>
+                        </a>
+                        <!-- Related hooks: <hoook_WsoUo97_0J> -->
+                        <div id="reset-btn" class="flex h align fit v1 tooltip-target">
+                            <div class="b-text b-text_08 b-text_grey-dark">
+                                Reset
+                            </div>
+                            <img src="./img/redo.svg" alt="redo" class="reset-btn">
+                            <span class="b-text b-text_08 tooltip">Clears localStorage</span>
                         </div>
                     </div>
+                    <div class="flex h fit align gap_05 tooltip-target">
+                        <!-- Related hooks: <hoook_Df2ldsoo90> -->
+                        <input type="checkbox" name="isDynamic" id="isDynamic" checked>
+                        <label class="b-text b-text_08" for="isDynamic">Dynamic</label>
+                        <span class="b-text b-text_08 tooltip">
+                            Check to apply changes dynamically
+                            <br />
+                            as you type and press `Enter`. Uncheck
+                            <br />
+                            to reload the page for each change.
+                        </span>
 
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <input class="modern-blox v3" id="unitInput">
-                            <div class="modern-blox-label">
-                                unit
-                                <span class="hint">(str)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Recieves `px` or `em` units. It will affect `gap`, `marginTop` and `marginBottom`.
-                        </div>
                     </div>
+                    <div class="flex h fit align gap_05 tooltip-target">
+                        <!-- Related hooks: <hoook_QGd430pod_w> -->
+                        <input type="checkbox" name="prioritizeLocalStorage" id="prioritizeLocalStorage">
+                        <label class="b-text b-text_08" for="prioritizeLocalStorage">Prioritize localStorage</label>
+                        <span class="b-text b-text_08 tooltip">
+                            Enable this option to prioritize localStorage
+                            <br />
+                            over URL query parameters. If you change options
+                            <br />
+                            from the query, they will be reset on reload.
+                            <br />
+                            Use this to ensure localStorage takes precedence.
+                        </span>
 
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <input class="modern-blox v3" id="smoothInput">
-                            <div class="modern-blox-label">
-                                smooth
-                                <span class="hint">(str)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Solves <a class="b-text b-text_grey-dark" target="_blank"
-                                href="https://github.com/LestevMisha/FlexGridify?tab=readme-ov-file#3-flash-of-unstyled-content-problem">FOUC</a>
-                            Problem. Can be seen only when page is reloaded.
-                            <i>This option will be available soon for the test</i>
-                        </div>
-                    </div>
-
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <input class="modern-blox v3" id="gapInput">
-                            <div class="modern-blox-label">
-                                gap
-                                <span class="hint">(num)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Sets a `gap` between elements within FlexGridify.
-                        </div>
-                    </div>
-
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <input class="modern-blox v3" id="marginTopInput">
-                            <div class="modern-blox-label">
-                                marginTop
-                                <span class="hint">(num)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Sets a `margin-top` for each element within FlexGridify.
-                        </div>
-                    </div>
-
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <input class="modern-blox v3" id="marginBottomInput">
-                            <div class="modern-blox-label">
-                                marginBottom
-                                <span class="hint">(num)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Sets a `margin-bottom` for each element within FlexGridify.
-                        </div>
-                    </div>
-
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <input class="modern-blox v3" id="defaultColumnAmountInput">
-                            <div class="modern-blox-label">
-                                defaultColumnAmount
-                                <span class="hint">(num)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Sets the default amount of columns in case if no `breakpointColumns` matches the current
-                            window/element size or if 'responsive' is set to `false`.
-                        </div>
-                    </div>
-
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <input class="modern-blox v3" id="responsiveInput">
-                            <div class="modern-blox-label">
-                                responsive
-                                <span class="hint">(bool)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Disables `breakpointColumns` (media queries).
-                        </div>
-                    </div>
-
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <textarea class="modern-blox modern-blox_textarea v3" id="breakpointColumnsTextarea"
-                                data-textarea-indent="true"></textarea>
-                            <div class="modern-blox-label">
-                                breakpointColumns
-                                <span class="hint">(obj)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Sets a media query and corresponding amount of columns for the FlexGridify. Uses `min-width`
-                            query. Can be affected by the `breakpointSelector` and `relative` parameters. For no mathing
-                            query `defaultColumnAmount` will be used.
-                        </div>
-                    </div>
-
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <input class="modern-blox v3" id="dragAndDropInput">
-                            <div class="modern-blox-label">
-                                dragAndDrop
-                                <span class="hint">(bool)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Enables drag-and-drop (dnd) functionality.
-                        </div>
-                    </div>
-
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <textarea class="modern-blox modern-blox_textarea v3" id="dndAnimateTextarea"
-                                data-textarea-indent="true"></textarea>
-                            <div class="modern-blox-label">
-                                dndAnimate
-                                <span class="hint">(obj)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Takes an object's properties and uses them to animate drag-and-drop functionality.
-                        </div>
-                    </div>
-
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <input class="modern-blox v3" id="dynamicHeight">
-                            <div class="modern-blox-label">
-                                dynamicHeight
-                                <span class="hint">(bool)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Automatically updates height if it's changed within the FlexGridify. (If text of the child
-                            will wrap or if child will change its height it will result an overall overflow of
-                            FlexGridify and can lead to unexpected behaviour when `dynamicHeight` is set to `false`)
-                        </div>
-                    </div>
-
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <input class="modern-blox v3" id="breakpointSelectorInput">
-                            <div class="modern-blox-label">
-                                breakpointSelector
-                                <span class="hint">(str)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Sets an element that will be observed for the media queries (breakpointColumns). By default
-                            is set to the main screen ("window") can be set to any element.
-                        </div>
-                    </div>
-
-                    <div class="flex v mb-1">
-                        <label class="modern-blox-wrapper">
-                            <textarea class="modern-blox modern-blox_textarea v3" id="breakpointCallbackTextarea"
-                                data-textarea-indent="false"></textarea>
-                            <div class="modern-blox-label">
-                                breakpointCallback
-                                <span class="hint">(code/string)</span>
-                            </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
-                        </label>
-                        <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
-                            Calls a callback function when media query is triggered.
-                        </div>
                     </div>
                 </div>
+
+
+                <div class="relative">
+                    <div class="flex min-h-20em v y-scroll" id="flexGridifyPropertiesStuck">
+
+                        <!-- STRING -->
+                        <div class="b-text b-text_grey-dark mb-1 mt-1"><i>String <span
+                                    class="b-text b-text_08 b-text_grey-dark v1">Type</span></i></div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="sizeUnitInput">
+                                <div class="modern-blox-label">
+                                    sizeUnit
+                                    <span class="hint">(str)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Specifies the unit of measurement (`px` or `em`) for `gap`, `marginTop`, and
+                                `marginBottom`.
+                            </div>
+                        </div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="breakpointSelectorInput">
+                                <div class="modern-blox-label">
+                                    breakpointSelector
+                                    <span class="hint">(str)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Sets an element to observe for media queries (columnBreakpoints), defaults to the main
+                                screen (`window`).
+                            </div>
+                        </div>
+
+
+                        <!-- NUMBER -->
+                        <div class="b-text b-text_grey-dark mb-1 mt-1"><i>Number <span
+                                    class="b-text b-text_08 b-text_grey-dark v1">Type</span></i></div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="gapInput">
+                                <div class="modern-blox-label">
+                                    gap
+                                    <span class="hint">(num)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Defines the space between elements within FlexGridify.
+                            </div>
+                        </div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="marginTopInput">
+                                <div class="modern-blox-label">
+                                    marginTop
+                                    <span class="hint">(num)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Sets the top margin for each element within FlexGridify.
+                            </div>
+                        </div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="marginBottomInput">
+                                <div class="modern-blox-label">
+                                    marginBottom
+                                    <span class="hint">(num)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Sets the bottom margin for each element within FlexGridify.
+                            </div>
+                        </div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="defaultColumnCountInput">
+                                <div class="modern-blox-label">
+                                    defaultColumnCount
+                                    <span class="hint">(num)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Specifies the default number of columns if no `columnBreakpoints` match or `responsive`
+                                is
+                                set to false.
+                            </div>
+                        </div>
+
+
+                        <!-- JSON -->
+                        <div class="b-text b-text_grey-dark mb-1 mt-1"><i>JSON <span
+                                    class="b-text b-text_08 b-text_grey-dark v1">Type</span></i></div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <!-- Related hooks: <hoook_Qkl3m2JJJ_0> (for every element) -->
+                                <textarea class="modern-blox modern-blox_textarea v3" id="columnBreakpointsTextarea"
+                                    data-textarea-indent="true"></textarea>
+                                <div class="modern-blox-label">
+                                    columnBreakpoints
+                                    <span class="hint">(obj)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Defines media queries and corresponding column counts for FlexGridify, influenced by
+                                `breakpointSelector` and `enableResponsiveLayout`.
+                            </div>
+                        </div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <textarea class="modern-blox modern-blox_textarea v3" id="dragAndDropAnimationTextarea"
+                                    data-textarea-indent="true"></textarea>
+                                <div class="modern-blox-label">
+                                    dragAndDropAnimation
+                                    <span class="hint">(obj)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Defines animation properties for drag-and-drop functionality.
+                            </div>
+                        </div>
+
+
+                        <!-- FUNCTION -->
+                        <div class="b-text b-text_grey-dark mb-1 mt-1"><i>Function <span
+                                    class="b-text b-text_08 b-text_grey-dark v1">Type</span></i></div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <textarea class="modern-blox modern-blox_textarea v3" id="onBreakpointChangeTextarea"
+                                    data-textarea-indent="false">console.log("Press 'Enter', open Dev Tool (F12), resize the flexGridify - and see the result.");</textarea>
+                                <div class="modern-blox-label">
+                                    onBreakpointChange
+                                    <span class="hint">(code/string)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Triggers a callback function every time `columnBreakpoints` (media query) is matched.
+                            </div>
+                        </div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <textarea class="modern-blox modern-blox_textarea v3" id="onDragAndDropChangeTextarea"
+                                    data-textarea-indent="false">console.log("Current order: ", order);</textarea>
+                                <div class="modern-blox-label">
+                                    onDragAndDropChange
+                                    <span class="hint">(code/string)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Triggers a callback function when an element is dropped.
+                            </div>
+                        </div>
+
+
+                        <!-- BOOLEAN -->
+                        <div class="b-text b-text_grey-dark mb-1 mt-1"><i>Boolean <span
+                                    class="b-text b-text_08 b-text_grey-dark v1">Type</span></i></div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="enableResponsiveLayoutInput">
+                                <div class="modern-blox-label">
+                                    enableResponsiveLayout
+                                    <span class="hint">(bool)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Disables `columnBreakpoints` (media queries).
+                            </div>
+                        </div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="enableDragAndDropInput">
+                                <div class="modern-blox-label">
+                                    enableDragAndDrop
+                                    <span class="hint">(bool)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Enables drag-and-drop (DND) functionality.
+                            </div>
+                        </div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="rememberDragAndDropPositionInput">
+                                <div class="modern-blox-label">
+                                    rememberDragAndDropPosition
+                                    <span class="hint">(bool)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Saves the position of elements when their order changes.
+                            </div>
+                        </div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="enableDynamicHeightInput">
+                                <div class="modern-blox-label">
+                                    enableDynamicHeight
+                                    <span class="hint">(bool)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Automatically adjusts the height when child elements change size within FlexGridify.
+                            </div>
+                        </div>
+                        <div class="flex v mb-1">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="enableSmoothLoadingInput">
+                                <div class="modern-blox-label">
+                                    enableSmoothLoading
+                                    <span class="hint">(bool)</span>
+                                </div>
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Addresses the
+                                <a class="b-text b-text_grey-dark" target="_blank"
+                                    href="https://github.com/LestevMisha/FlexGridify?tab=readme-ov-file#3-flash-of-unstyled-content-problem">FOUC</a>
+                                (Flash of Unstyled Content) problem.
+                            </div>
+                        </div>
+                        <div class="flex v mb-5">
+                            <label class="modern-blox-wrapper">
+                                <input class="modern-blox v3" id="enableLogQueryInput">
+                                <div class="modern-blox-label">
+                                    enableLogQuery
+                                    <span class="hint">(bool)</span>
+                                </div>
+                                <!-- Related hooks: <hoook_Asd4O68FdH> (for every element) -->
+                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                            </label>
+                            <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
+                                Logs breakpoints to the console when resizing FlexGridify, if set to true.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="fader top"></div>
+                    <div class="fader btm"></div>
+                </div>
+
             </div>
 
             <div class="flex v gap flex_light-border-left mob">
@@ -253,6 +341,7 @@
                 <div class="flex h gap_05 mob">
                     <div class="b-text b-text_08 b-text_grey-dark v1">
                         Width x Height:
+                        <!-- Related hooks: <hoook_Hg5Od206sa> -->
                         <span id="currentDimensions">-</span>
                     </div>
                     <div class="b-text b-text_08 b-text_grey-dark v1">
@@ -271,7 +360,8 @@
                     </div>
                 </div>
 
-                <div class="element flexGridify flexGridify_init">
+                <!-- Related hooks: <hoook_Hg5Od206sa> -->
+                <div class="element flexGridify flexGridify-init">
                     <div class="flex v ds-row">
                         <div class="back_num">1</div>
                         <div class="b-text b-text_08 emphasize crystal-blue">
@@ -481,8 +571,7 @@
         </div>
     </div>
 
-    <script src="./bundle.js"></script>
-    <script src="./js/pages.js"></script>
+    <script src="./js/bundle.js"></script>
     <script src="./js/main.js"></script>
 
 </body>

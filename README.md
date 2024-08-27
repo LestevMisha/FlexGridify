@@ -50,6 +50,7 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>FlexGridify</title>
+        <link rel="icon" type="image/x-icon" href="https://lestevmisha.github.io/FlexGridify/img/logo.png">
         <link rel="stylesheet" href="https://lestevmisha.github.io/FlexGridify/main.css">
     </head>
 
@@ -63,12 +64,12 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
     <br />
       
    ```html
-    <div class="container">
+      <div class="container">
 
         <div class="flex h gap mb-3">
             <div class="flex v w50 mob">
                 <div class="flex h gap align mob">
-                    <img class="logo" src="./img/logo.png" alt="logo">
+                    <img class="logo" src="https://lestevmisha.github.io/FlexGridify/img/logo.png" alt="logo">
                     <h1 class="tcmob">FlexGridify <span class="b-text b-text_grey-dark">2024</span></h1>
                 </div>
                 <div class="b-text b-text_grey-dark tcmob mt-05">
@@ -88,7 +89,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                             <div class="b-text b-text_08 b-text_grey-dark">
                                 Documentation
                             </div>
-                            <img src="./img/arrow-right.svg" alt="arrow-right" class="doc-btn">
+                            <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg" alt="arrow-right"
+                                class="doc-btn">
                             <span class="b-text b-text_08 tooltip">Opens GitHub Docs</span>
                         </a>
                         <!-- Related hooks: <hoook_WsoUo97_0J> -->
@@ -96,7 +98,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                             <div class="b-text b-text_08 b-text_grey-dark">
                                 Reset
                             </div>
-                            <img src="./img/redo.svg" alt="redo" class="reset-btn">
+                            <img src="https://lestevmisha.github.io/FlexGridify/img/redo.svg" alt="redo"
+                                class="reset-btn">
                             <span class="b-text b-text_08 tooltip">Clears localStorage</span>
                         </div>
                     </div>
@@ -144,7 +147,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     sizeUnit
                                     <span class="hint">(str)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Specifies the unit of measurement (`px` or `em`) for `gap`, `marginTop`, and
@@ -158,7 +162,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     breakpointSelector
                                     <span class="hint">(str)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Sets an element to observe for media queries (columnBreakpoints), defaults to the main
@@ -177,7 +182,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     gap
                                     <span class="hint">(num)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Defines the space between elements within FlexGridify.
@@ -190,7 +196,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     marginTop
                                     <span class="hint">(num)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Sets the top margin for each element within FlexGridify.
@@ -203,7 +210,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     marginBottom
                                     <span class="hint">(num)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Sets the bottom margin for each element within FlexGridify.
@@ -216,7 +224,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     defaultColumnCount
                                     <span class="hint">(num)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Specifies the default number of columns if no `columnBreakpoints` match or `responsive`
@@ -238,7 +247,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     columnBreakpoints
                                     <span class="hint">(obj)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Defines media queries and corresponding column counts for FlexGridify, influenced by
@@ -253,7 +263,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     dragAndDropAnimation
                                     <span class="hint">(obj)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Defines animation properties for drag-and-drop functionality.
@@ -272,7 +283,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     onBreakpointChange
                                     <span class="hint">(code/string)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Triggers a callback function every time `columnBreakpoints` (media query) is matched.
@@ -286,7 +298,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     onDragAndDropChange
                                     <span class="hint">(code/string)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Triggers a callback function when an element is dropped.
@@ -304,7 +317,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     enableResponsiveLayout
                                     <span class="hint">(bool)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Disables `columnBreakpoints` (media queries).
@@ -317,7 +331,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     enableDragAndDrop
                                     <span class="hint">(bool)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Enables drag-and-drop (DND) functionality.
@@ -330,7 +345,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     rememberDragAndDropPosition
                                     <span class="hint">(bool)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Saves the position of elements when their order changes.
@@ -343,7 +359,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     enableDynamicHeight
                                     <span class="hint">(bool)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Automatically adjusts the height when child elements change size within FlexGridify.
@@ -356,7 +373,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     enableSmoothLoading
                                     <span class="hint">(bool)</span>
                                 </div>
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Addresses the
@@ -373,7 +391,8 @@ To quickly implement FlexGridify, copy and paste one of the code examples below 
                                     <span class="hint">(bool)</span>
                                 </div>
                                 <!-- Related hooks: <hoook_Asd4O68FdH> (for every element) -->
-                                <img src="./img/arrow-right.svg" alt="arrow-right" class="send-btn">
+                                <img src="https://lestevmisha.github.io/FlexGridify/img/arrow-right.svg"
+                                    alt="arrow-right" class="send-btn">
                             </label>
                             <div class="b-text b-text_08 b-text_grey-dark v1 mt-05">
                                 Logs breakpoints to the console when resizing FlexGridify, if set to true.

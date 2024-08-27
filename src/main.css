@@ -15,7 +15,7 @@
     cursor: move !important;
 }
 
-.flexGridify.flexGridify_init {
+.flexGridify.flexGridify-init {
     opacity: 0;
     visibility: hidden;
 }

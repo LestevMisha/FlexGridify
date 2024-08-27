@@ -2,6 +2,13 @@ const path = require("path");
 
 module.exports = {
     mode: "production",
+    // mode: "development",
+    // devServer: {
+    //     static: {
+    //         directory: path.join(__dirname, 'website-tester'),
+    //       },
+    //     allowedHosts: "all",
+    // },
     entry: {
         bundle: path.resolve(__dirname, "src/index.js"),
     },

@@ -4,14 +4,20 @@
   "description": "A responsive grid masonry based on flex layout",
   "main": "./src/index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "dev": "webpack serve"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LestevMisha/FlexGridify.git"
   },
   "keywords": [
-    "flexgridify"
+    "flexgridify",
+    "drag and drop",
+    "flex masonry",
+    "grid masonry",
+    "dnd library",
+    "drag and drop for grid masonry"
   ],
   "author": "Mikhail Lestev",
   "license": "MIT",
@@ -23,7 +29,8 @@
     "css-loader": "^7.1.2",
     "style-loader": "^4.0.0",
     "webpack": "^5.93.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
   },
   "files": [
     "/dist",

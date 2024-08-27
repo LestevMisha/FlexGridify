@@ -4,53 +4,11 @@ import { addProperties, removeProperties } from "./components/addRemovePropertie
 import * as css from "./main.css";
 
 class FlexGridify {
-    constructor(selector, userOptions = {}) {
-        this.element = document.querySelector(selector);
-        this.defaultOptions = {
-            logQuery: false,
-            smooth: false,
-            dragAndDrop: false,
-            dndAnimate: {
-                opacity: 0.5,
-                transform: "translate(0.25em, -0.25em)",
-            },
-            unit: "em",
-            gap: 1,
-            marginTop: 0,
-            marginBottom: 0,
-            defaultColumnAmount: 1,
-            responsive: true,
-            breakpointColumns: {
-                "min-width: 1500px": 6,
-                "min-width: 1200px": 5,
-                "min-width: 992px": 4,
-                "min-width: 768px": 3,
-                "min-width: 576px": 2,
-                "min-width: 0px": 1
-            },
-            dynamicHeight: true,
-            breakpointSelector: "window",
-            breakpointCallback: null,
-        };
-
-        this.options = { ...this.defaultOptions, ...userOptions };
-        this.fontSize = this.#getFontSize();
-        this.#initializeParameters();
-        this.#setupFlexGridify();
-        if (this.responsive) {
-            this.#setupBreakpointListener();
-        }
-        if (this.smooth) {
-            this.element.classList.remove('flexGridify_init');
-        }
-        if (this.dragAndDrop) {
-            this.#setupDragAndDrop();
+    constructor(selector = null, userOptions = {}) {
+        if (selector && userOptions) {
+            this.initialize(selector, userOptions);
         }
     }
-
-
-
-
 
     /*
      * ---------------------------------------------------------------------------------------->
@@ -60,35 +18,118 @@ class FlexGridify {
      * ---------------------------------------------------------------------------------------->
      */
 
+    // Retrieves default options
+    getDefaultOptions() {
+        return {
+            enableLogQuery: false,
+            enableResponsiveLayout: true,
+            enableSmoothLoading: false,
+            enableDynamicHeight: true,
+            enableDragAndDrop: false,
+            rememberDragAndDropPosition: true,
+            dragAndDropAnimation: {
+                opacity: 0.5,
+                transform: "translate(0.25em, -0.25em)",
+            },
+            columnBreakpoints: {
+                1500: 6,
+                1200: 5,
+                992: 4,
+                768: 3,
+                576: 2,
+                0: 1
+            },
+            onDragAndDropChange: null,
+            onBreakpointChange: null,
+            gap: 1,
+            marginTop: 0,
+            marginBottom: 0,
+            defaultColumnCount: 1,
+            sizeUnit: "em",
+            breakpointSelector: "window",
+        }
+        // return {
+        //     // logQuery: false,
+        //     // smooth: false,
+        //     // dragAndDrop: false,
+        //     // dndAnimate: {
+        //     //     opacity: 0.5,
+        //     //     transform: "translate(0.25em, -0.25em)",
+        //     // },
+        //     // dndMemorize: true,
+        //     // dndMemorizeCallback: null,
+        //     // unit: "em",
+        //     gap: 1,
+        //     marginTop: 0,
+        //     marginBottom: 0,
+        //     // defaultColumnAmount: 1,
+        //     // responsive: true,
+        //     // breakpointColumns: {
+        //     //     "min-width: 1500px": 6,
+        //     //     "min-width: 1200px": 5,
+        //     //     "min-width: 992px": 4,
+        //     //     "min-width: 768px": 3,
+        //     //     "min-width: 576px": 2,
+        //     //     "min-width: 0px": 1
+        //     // },
+        //     // dynamicHeight: true,
+        //     breakpointSelector: "window",
+        //     // breakpointCallback: null,
+        // }
+    }
 
+    // main initialization process
+    initialize(selector, userOptions) {
+        // Default Initialization
+        this.defaultOptions = this.getDefaultOptions();
+        this.options = { ...this.defaultOptions, ...userOptions };
 
+        // Proceed with initialization if a selector is provided
+        if (selector) {
+            this.element = document.querySelector(selector);
 
+            // Initialization
+            this.#initializeParameters();
+            this.#setupFlexGridify();
+            this.#setupBreakpointListener();
+            this.#setupDragAndDropListeners();
 
-    // returns current breakpoint query using `numCols`
-    getCurrentBreakpointQuery() {
-        if (this.responsive) {
-            for (const [breakpoint, cols] of Object.entries(this.breakpointColumns)) {
-                if (this.#breakpointElement === "window") {
-                    if (window.matchMedia(`(${breakpoint})`).matches) {
-                        return breakpoint;
-                    }
-                } else {
-                    const breakpointValue = parseFloat(breakpoint.match(/(\d+)/g)[0]);
-                    const currentWidth = parseFloat(window.getComputedStyle(this.#breakpointElement).width);
-                    if (currentWidth > breakpointValue) {
-                        return breakpoint;
-                    }
-                }
+            // show the grid
+            if (this.enableSmoothLoading) {
+                setTimeout(() => {
+                    this.element.classList.remove(this.#fGinit__className);
+                }, 12);
             }
         }
-        return "No query, responsive is set to `false`";
+    }
+
+    // Returns columns/breakpoint value
+    getBreakpointQuery(query = "columns") {
+        const defaultReturn = query === "columns" ? this.defaultColumnCount : "No query, `responsive` is set to `false`";
+        if (!this.enableResponsiveLayout) return defaultReturn;
+
+        const throughBreakpointsValue = this.#throughBreakpoints((breakpointElement, [breakpoint, breakpointNext, columns], mediaQuery, mediaQueryNext) => {
+
+            if (typeof breakpointElement === "object") {
+                // If `breakpointSelector` is an element (meaning object)
+                const currentWidth = parseFloat(window.getComputedStyle(breakpointElement).width);
+                if (currentWidth > breakpoint && !(currentWidth > breakpointNext)) return query === "columns" ? columns : breakpoint;
+            } else {
+                // If `breakpointSelector` is a string
+                if (mediaQuery.matches && !mediaQueryNext.matches) return query === "columns" ? columns : breakpoint;
+            }
+
+        });
+
+        if (throughBreakpointsValue) return throughBreakpointsValue;
+        return defaultReturn;
     }
 
     // adds margin-top to the element's children
     applyMarginTop() {
         this.#typeOf(this.marginTop, "number");
         Array.from(this.element.children).forEach(child => {
-            child.style.marginTop = `${this.marginTop}${this.unit}`;
+            child.style.marginTop = `${this.marginTop}${this.sizeUnit}`;
         });
     }
 
@@ -96,7 +137,7 @@ class FlexGridify {
     applyMarginBottom() {
         this.#typeOf(this.marginBottom, "number");
         Array.from(this.element.children).forEach(child => {
-            child.style.marginBottom = `${this.marginBottom}${this.unit}`;
+            child.style.marginBottom = `${this.marginBottom}${this.sizeUnit}`;
         });
     }
 
@@ -105,8 +146,8 @@ class FlexGridify {
         this.#typeOf(this.marginTop, "number");
         this.#typeOf(this.marginBottom, "number");
         Array.from(this.element.children).forEach(child => {
-            child.style.marginTop = `${this.marginTop}${this.unit}`;
-            child.style.marginBottom = `${this.marginBottom}${this.unit}`;
+            child.style.marginTop = `${this.marginTop}${this.sizeUnit}`;
+            child.style.marginBottom = `${this.marginBottom}${this.sizeUnit}`;
         });
     }
 
@@ -114,7 +155,7 @@ class FlexGridify {
     applyHeightChange(numCols) {
         // if no argument present
         if (!numCols) {
-            numCols = this.getColumnCount();
+            numCols = this.getBreakpointQuery("columns");
         }
         if (numCols < 2) {
             this.element.style.removeProperty('height');
@@ -129,12 +170,12 @@ class FlexGridify {
 
         for (let i = 0; i < children.length; i++) {
             const child = children[i];
-            if (child.classList.contains('flexGridify-break')) continue;
+            if (child.classList.contains(this.#fGbreak__className)) continue;
 
             const style = styles[i];
             const order = parseFloat(style.getPropertyValue('order'), 10);
             const height = parseFloat(style.getPropertyValue('height'));
-            const gap = this.unit === "em" ? this.gap * fontSize : this.gap;
+            const gap = this.sizeUnit === "em" ? this.gap * fontSize : this.gap;
 
             heights[order - 1] += Math.ceil(height) + marginValue + gap;
         }
@@ -142,32 +183,34 @@ class FlexGridify {
         this.element.style.height = `${Math.max(...heights)}px`;
     }
 
-    // Returns up-to-date/current amount of columns, depending on media queries
-    getColumnCount() {
-        if (this.responsive) {
-            for (const [breakpoint, cols] of Object.entries(this.breakpointColumns)) {
-                if (this.breakpointSelector === "window") {
-                    if (window.matchMedia(`(${breakpoint})`).matches) {
-                        return cols;
-                    }
-                } else {
-                    const breakpointValue = parseFloat(breakpoint.match(/(\d+)/g)[0]);
-                    const currentWidth = parseFloat(window.getComputedStyle(this.#breakpointElement).width);
-                    if (currentWidth > breakpointValue) {
-                        return cols;
-                    }
-                }
-            }
-        }
-        return this.defaultColumnAmount;
-    }
+    // // Returns up-to-date/current amount of columns, depending on media queries
+    // getColumnCount() {
+    //     if (this.enableResponsiveLayout) {
+    //         let cols = this.defaultColumnCount;
+    //         this.#throughBreakpoints(([breakpoint, columns], mediaQuery, mediaQueryNext) => {
+    //             if (this.#breakpointElement === "window") {
+    //                 if (mediaQuery.matches && !mediaQueryNext.matches) {
+    //                     cols = columns;
+    //                 }
+    //             } else {
+    //                 const currentWidth = parseFloat(window.getComputedStyle(this.#breakpointElement).width);
+    //                 if (currentWidth > breakpoint) {
+    //                     cols = columns;
+    //                 }
+    //             }
+    //         });
+    //         return cols;
+    //     }
+    //     return this.defaultColumnCount;
+    // }
 
     // adds/updates column class amount, depending on the `numCols` parameter
     applyColumnClass(numCols) {
         // if no argument present
         if (!numCols) {
-            numCols = this.getColumnCount();
+            numCols = this.getBreakpointQuery("columns");
         }
+
         const className = `flexGridify-cols-${numCols}`;
         if (!this.element.classList.contains(className)) {
             this.element.className = this.element.className.replace(/flexGridify-cols-\d+/, '');
@@ -179,14 +222,14 @@ class FlexGridify {
     applyColumnBreaks(numCols) {
         // if no argument present
         if (!numCols) {
-            numCols = this.getColumnCount();
+            numCols = this.getBreakpointQuery("columns");
         }
-        const existingBreaks = this.element.querySelectorAll('.flexGridify-break');
+        const existingBreaks = this.element.querySelectorAll(`.${this.#fGbreak__className}`);
         if (existingBreaks.length !== numCols - 1) {
             this.#clearColumnBreaks();
             for (let i = 1; i < numCols; i++) {
                 const breakElement = document.createElement('div');
-                breakElement.classList.add('flexGridify-break', `flexGridify-break-${i}`);
+                breakElement.classList.add(this.#fGbreak__className, `${this.#fGbreak__className}-${i}`);
                 this.element.appendChild(breakElement);
             }
         }
@@ -202,11 +245,11 @@ class FlexGridify {
 
         // if no argument present
         if (!numCols) {
-            numCols = this.getColumnCount();
+            numCols = this.getBreakpointQuery("columns");
         }
 
         // Cache unit and gap values for reuse
-        const gapUnit = this.unit;
+        const gapUnit = this.sizeUnit;
         const gap = this.gap;
 
         // Calculate the number of breaks, which is always one less than the number of columns
@@ -253,7 +296,9 @@ class FlexGridify {
 
     // for user to reset or update the flexGridify
     reset() {
-        const numCols = this.getColumnCount();
+        this.#check();
+        const numCols = this.getBreakpointQuery("columns");
+        this.applyMargins();
         this.applyGap(numCols);
         this.applyColumnClass(numCols);
         this.applyColumnBreaks(numCols);
@@ -272,7 +317,7 @@ class FlexGridify {
     // adds dynamic observers to children
     connectDynamicObservers() {
         Array.from(this.element.children).forEach(child => {
-            if (this.dynamicHeight) {
+            if (this.enableDynamicHeight) {
                 this.#dynamicHeightUpdater(child);
             }
         });
@@ -301,6 +346,7 @@ class FlexGridify {
         }
     }
 
+    // removes all dnd listeners
     cleanupDndListeners() {
         this.#dndListenersForCleanup.forEach((listener, event) => {
             this.element.removeEventListener(event, listener);
@@ -314,15 +360,26 @@ class FlexGridify {
 
     // re-initializes drag-and-drop functionality
     reinitDragAndDrop() {
-        Array.from(this.element.children).forEach(child => {
+        if (!this.enableDragAndDrop) return;
+        const numCols = this.getBreakpointQuery("columns");
+
+        const fragment = document.createDocumentFragment();
+        const children = Array.from(this.element.children);
+        const lengthArray = Array.from({ length: children.length }, (_, v) => v);
+        const orderedList = this.rememberDragAndDropPosition ? (JSON.parse(localStorage.getItem('gridOrder')) ?? lengthArray) : lengthArray;
+
+        orderedList.forEach(order => {
+            const child = children.find((child_) => parseInt(child_.getAttribute("data-draggable-id")) === order);
             child.setAttribute('draggable', 'true');
+            child.setAttribute('data-draggable-id', order);
+            fragment.appendChild(child);
         });
-        this.#setupDragAndDrop();
+
+        this.element.innerHTML = '';
+        this.element.appendChild(fragment);
+        this.applyColumnBreaks(numCols);
+        this.#setupDragAndDropListeners();
     }
-
-
-
-
 
 
     /*
@@ -332,10 +389,6 @@ class FlexGridify {
      * ---------------------------------------------------------------------------------------->
      * ---------------------------------------------------------------------------------------->
      */
-
-
-
-
 
     // removes every break from the element
     #clearColumnBreaks() {
@@ -354,21 +407,13 @@ class FlexGridify {
     #getMarginValue(fontSize) {
         let marginValue = 0;
         if (this.marginBottom) {
-            marginValue += this.unit === "em" ? this.marginBottom * fontSize : this.marginBottom;
+            marginValue += this.sizeUnit === "em" ? this.marginBottom * fontSize : this.marginBottom;
         }
         if (this.marginTop) {
-            marginValue += this.unit === "em" ? this.marginTop * fontSize : this.marginTop;
+            marginValue += this.sizeUnit === "em" ? this.marginTop * fontSize : this.marginTop;
         }
         return marginValue;
     }
-
-    // returns current fon size
-    #getFontSize() {
-        return window.getComputedStyle(this.element).getPropertyValue("font-size").toString().match(/\d+/g)[0];
-    }
-
-
-
 
 
     /*
@@ -378,10 +423,6 @@ class FlexGridify {
      * ---------------------------------------------------------------------------------------->
      * ---------------------------------------------------------------------------------------->
      */
-
-
-
-
 
     /*
      * Method is used in initial setup
@@ -393,18 +434,17 @@ class FlexGridify {
      */
     #reload(isBreakpoint = false, breakpoint = null) {
         // fire breakpoint callback
-        if (isBreakpoint && this.breakpointCallback) {
-            if (this.logQuery && breakpoint) {
+        if (isBreakpoint && this.onBreakpointChange) {
+            if (this.enableLogQuery && breakpoint) {
                 console.log("%cThreshold:", "color: #0d6efd;", breakpoint);
             }
-            this.breakpointCallback();
+            this.onBreakpointChange();
         } else {
-            if (this.logQuery && breakpoint) {
+            if (this.enableLogQuery && breakpoint) {
                 console.log("%cThreshold:", "color: #0d6efd;", breakpoint);
             }
         }
-        const numCols = this.getColumnCount();
-
+        const numCols = this.getBreakpointQuery("columns");
         this.applyMargins();
         this.applyGap(numCols);
         this.applyColumnClass(numCols);
@@ -417,17 +457,29 @@ class FlexGridify {
      * Calling the reload method.
      */
     #setupFlexGridify() {
-        this.element.classList.add('flexGridify');
-        Array.from(this.element.children).forEach(child => {
-            child.classList.add('flexGridify-item');
-            if (this.dynamicHeight) {
+        this.element.classList.add(this.#fG__className);
+
+        const fragment = document.createDocumentFragment();
+        const children = Array.from(this.element.children);
+        const lengthArray = Array.from({ length: children.length }, (_, v) => v);
+        const orderedList = this.rememberDragAndDropPosition ? (JSON.parse(localStorage.getItem('gridOrder')) ?? lengthArray) : lengthArray;
+
+        orderedList.forEach(order => {
+            const child = children[order];
+
+            child.classList.add(this.#fGitem__className);
+            child.setAttribute('data-draggable-id', order);
+            child.setAttribute('draggable', this.enableDragAndDrop ? 'true' : "false");
+
+            if (this.enableDynamicHeight) {
                 this.#dynamicHeightUpdater(child);
             }
-            if (this.dragAndDrop) {
-                child.setAttribute('draggable', 'true');
-            }
+            fragment.appendChild(child);
         });
-        this.#reload();
+
+        // Clear the parent element and re-append reordered children
+        this.element.innerHTML = '';
+        this.element.appendChild(fragment);
     }
 
     /*
@@ -438,26 +490,27 @@ class FlexGridify {
      */
     #setupBreakpointListener() {
         const boundReload = this.#reload.bind(this);
-        if (this.breakpointSelector === "window") {
-            for (const breakpoint of Object.keys(this.breakpointColumns)) {
-                const mediaQuery = window.matchMedia(`(${breakpoint})`);
-                const listener = () => boundReload(true, breakpoint.match(/\d+/)[0]);
+
+        this.#throughBreakpoints((breakpointElement, [breakpoint, breakpointNext, columns], mediaQuery, mediaQueryNext) => {
+
+            if (typeof breakpointElement === "object") {
+                // Sets a breakpoint listeners for an element
+                const currentWidth = parseFloat(window.getComputedStyle(breakpointElement).width);
+                if (currentWidth > breakpoint && !(currentWidth > breakpointNext)) {
+                    const cleanup = matchElementMedia(breakpointElement, Object.keys(this.columnBreakpoints), boundReload);
+                    this.#breakpointResizeObserverCleanup = cleanup;
+                };
+            } else {
+                // Sets a matchMedia for window
+                const listener = () => { boundReload(true, breakpoint) };
                 mediaQuery.addEventListener('change', listener);
 
-                // keep for cleanup
+                if (mediaQuery.matches && !mediaQueryNext.matches) listener();
                 this.#mediaQueryListenersForCleanup.set(mediaQuery, listener);
             }
-        } else {
-            // Numeric Breakpoints Array
-            const numericBreakpointsArray = Object.keys(this.breakpointColumns).map(breakpointKey => {
-                const matches = breakpointKey.match(/\d+/);
-                return parseFloat(matches[0], 10);
-            }).sort((a, b) => a - b);
-            const cleanup = matchElementMedia(this.#breakpointElement, numericBreakpointsArray, boundReload);
 
-            // keep for cleanup
-            this.#breakpointResizeObserverCleanup = cleanup;
-        }
+        });
+
     }
 
     /*
@@ -478,7 +531,7 @@ class FlexGridify {
                     } else {
                         const lastHeight = lastHeights.get(target);
                         if (lastHeight !== currentHeight) {
-                            const numCols = this.getColumnCount();
+                            const numCols = this.getBreakpointQuery("columns");
                             if (numCols > 1) {
                                 this.applyHeightChange(numCols);
                             }
@@ -500,17 +553,18 @@ class FlexGridify {
     * Drag And Drop (DND)
     * Enables drag and drop for children/Switch places
     */
-    #setupDragAndDrop() {
+    #setupDragAndDropListeners() {
+        if (!this.enableDragAndDrop) return;
         let draggedItem, enteredItem;
 
         const handleDragStart = (e) => {
-            draggedItem = e.target.closest(".flexGridify-item");
+            draggedItem = e.target.closest(`.${this.#fGitem__className}`);
         }
 
         const handleDragEnter = (e) => {
-            enteredItem = e.target.closest(".flexGridify-item");
+            enteredItem = e.target.closest(`.${this.#fGitem__className}`);
             if (enteredItem) {
-                addProperties(enteredItem, this.dndAnimate);
+                addProperties(enteredItem, this.dragAndDropAnimation);
             }
         }
 
@@ -519,25 +573,26 @@ class FlexGridify {
         }
 
         const handleDragLeave = (e) => {
-            const currentLeftItem = e.target.closest(".flexGridify-item");
+            const currentLeftItem = e.target.closest(`.${this.#fGitem__className}`);
             if (currentLeftItem === null) return;
             if (currentLeftItem === enteredItem) return;
             if (currentLeftItem === draggedItem) return;
 
-            removeProperties(currentLeftItem, Object.keys(this.dndAnimate));
+            removeProperties(currentLeftItem, Object.keys(this.dragAndDropAnimation));
         }
 
         const handleDrop = (e) => {
-            const currentlyEnteredItem = e.target.closest(".flexGridify-item");
+            const currentlyEnteredItem = e.target.closest(`.${this.#fGitem__className}`);
             if (currentlyEnteredItem === null) return;
 
-            removeProperties(currentlyEnteredItem, Object.keys(this.dndAnimate));
+            removeProperties(currentlyEnteredItem, Object.keys(this.dragAndDropAnimation));
             swapElements(draggedItem, currentlyEnteredItem);
             this.applyHeightChange();
+            this.#saveOrderToStorage();
         }
 
         const handleDragEnd = (e) => {
-            removeProperties(draggedItem, Object.keys(this.dndAnimate));
+            removeProperties(draggedItem, Object.keys(this.dragAndDropAnimation));
         }
 
 
@@ -556,6 +611,43 @@ class FlexGridify {
         });
     }
 
+    // Save order to localStorage
+    #saveOrderToStorage() {
+        if (!this.rememberDragAndDropPosition) return;
+        const order = Array.from(this.element.querySelectorAll(`.${this.#fGitem__className}`)).map(child => parseInt(child.getAttribute('data-draggable-id')));
+        localStorage.setItem('gridOrder', JSON.stringify(order));
+        // callback
+        if (this.onDragAndDropChange) this.onDragAndDropChange(order);
+    }
+
+    // Loops callback with needed values
+    #throughBreakpoints(callback) {
+        const asendingColumnBreakpoints = Object.entries(this.columnBreakpoints).sort((a, b) => a - b);
+        const breakpointElement = this.breakpointSelector !== "window" ? document.querySelector(this.breakpointSelector) : this.breakpointSelector;
+
+        for (var i = 0; asendingColumnBreakpoints.length > i; i++) {
+            const bucket = asendingColumnBreakpoints[i];
+            const nextBucket = asendingColumnBreakpoints[i + 1] ?? [];
+            const breakpoint = bucket[0];
+            const breakpointNext = nextBucket[0];
+            const mediaQuery = window.matchMedia(`(min-width: ${breakpoint}px)`);
+            const mediaQueryNext = breakpointNext ? window.matchMedia(`(min-width: ${breakpointNext}px)`) : false;
+
+
+            const value = callback(breakpointElement, [breakpoint, breakpointNext, bucket[1]], mediaQuery, mediaQueryNext);
+            if (value) return value;
+        }
+        return null;
+    }
+
+    #check() {
+        if (this.sizeUnit !== "px" && this.sizeUnit !== "em") {
+            throw TypeError("Incorrect input. 'sizeUnit' has to be either 'em' or 'px'");
+        } else if (this.defaultColumnCount > 8) {
+            throw TypeError(`${this.defaultColumnCount} columns is restricted. Maximum amount of columns 'FlexGridify' can have by default is 8, if more is needed consider to change it manually`);
+        }
+    }
+
     /*
      * Main parameters initialization.
      * Initializes all the properties for further use
@@ -564,33 +656,43 @@ class FlexGridify {
     #mediaQueryListenersForCleanup
     #dynamicResizeObserversForCleanup
     #breakpointResizeObserverCleanup
-    #breakpointElement
+    // classnames
+    #fGitem__className
+    #fGbreak__className
+    #fGinit__className
+    #fG__className
 
     #initializeParameters() {
-        const { gap, unit, smooth, dragAndDrop, dndAnimate, marginTop, marginBottom, logQuery, dynamicHeight, breakpointSelector, defaultColumnAmount, responsive, breakpointColumns, breakpointCallback } = this.options;
+        const { gap, sizeUnit, enableSmoothLoading, enableDragAndDrop, dragAndDropAnimation, rememberDragAndDropPosition, marginTop, marginBottom, enableLogQuery, enableDynamicHeight, breakpointSelector, defaultColumnCount, enableResponsiveLayout, columnBreakpoints, onBreakpointChange, onDragAndDropChange } = this.options;
 
         // public parameters
-        this.unit = unit;
-        this.smooth = smooth;
-        this.dragAndDrop = dragAndDrop;
-        this.dndAnimate = dndAnimate;
+        this.sizeUnit = sizeUnit;
+        this.enableSmoothLoading = enableSmoothLoading;
+        this.enableDragAndDrop = enableDragAndDrop;
+        this.rememberDragAndDropPosition = rememberDragAndDropPosition;
+        this.dragAndDropAnimation = dragAndDropAnimation;
         this.gap = gap;
         this.marginTop = marginTop;
         this.marginBottom = marginBottom;
-        this.logQuery = logQuery;
-        this.dynamicHeight = dynamicHeight;
+        this.enableLogQuery = enableLogQuery;
+        this.enableDynamicHeight = enableDynamicHeight;
         this.breakpointSelector = breakpointSelector;
-        this.defaultColumnAmount = defaultColumnAmount;
-        this.responsive = responsive;
-        this.breakpointCallback = breakpointCallback;
-        this.breakpointColumns = breakpointColumns;
+        this.defaultColumnCount = defaultColumnCount;
+        this.enableResponsiveLayout = enableResponsiveLayout;
+        this.onBreakpointChange = onBreakpointChange;
+        this.onDragAndDropChange = onDragAndDropChange;
+        this.columnBreakpoints = columnBreakpoints;
 
-        // private parameters
-        this.#breakpointElement = document.querySelector(this.breakpointSelector);
+        // * private parameters
         this.#dndListenersForCleanup = new Map();
         this.#mediaQueryListenersForCleanup = new Map();
         this.#dynamicResizeObserversForCleanup = new Map();
         this.#breakpointResizeObserverCleanup = null;
+        // ** classnames
+        this.#fGitem__className = "flexGridify-item";
+        this.#fGbreak__className = "flexGridify-break";
+        this.#fGinit__className = "flexGridify-init";
+        this.#fG__className = "flexGridify";
     }
 
 }

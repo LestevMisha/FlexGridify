@@ -844,8 +844,8 @@ const FlexGridify = new FlexGridify(".your-selector", {
     enableDragAndDrop: false,
     rememberDragAndDropPosition: true,
     dragAndDropAnimation: {
-    opacity: 0.5,
-    	transform: "translate(0.25em, -0.25em)",
+        opacity: 0.5,
+        transform: "translate(0.25em, -0.25em)",
     },
     columnBreakpoints: {
         1500: 6,
@@ -853,7 +853,7 @@ const FlexGridify = new FlexGridify(".your-selector", {
         992: 4,
         768: 3,
         576: 2,
-    	0: 1
+        0: 1
     },
     onDragAndDropChange: null,
     onBreakpointChange: null,
@@ -863,6 +863,7 @@ const FlexGridify = new FlexGridify(".your-selector", {
     defaultColumnCount: 1,
     sizeUnit: "em",
     breakpointSelector: "window",
+    dragAndDropSelector: "default",
 });
 ```
 
@@ -896,7 +897,8 @@ const FlexGridify = new FlexGridify(".your-selector", {
 #### **String** *Type*
 
 - **sizeUnit** - The unit of measurement used for spacing and sizing within the grid. Can be either "em" or "px".
-- **breakpointSelector** - Specifies the element or "window" that should be used for responsive breakpoints.
+- **breakpointSelector** - Specifies the element (by default "window") that should be used for responsive breakpoints.
+- **dragAndDropSelector** - Specifies the element (by default `flexGridify-item` which is "default") that should be used for drag event.
 
 ## Methods
 

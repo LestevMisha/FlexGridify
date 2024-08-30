@@ -286,6 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // String
                     sizeUnit: (value) => String(value),
                     breakpointSelector: (value) => String(value),
+                    dragAndDropSelector: (value) => String(value),
                 }
 
                 const value = propertyHandlers[property](element.value);
@@ -311,6 +312,11 @@ document.addEventListener("DOMContentLoaded", function () {
                             break;
                         case "enableDragAndDrop":
                             value ? flexGridify.reinitDragAndDrop() : flexGridify.cleanupDndListeners();
+                            break;
+                        case "dragAndDropSelector":
+                            // reset drag and drop functionality
+                            flexGridify.cleanupDndListeners();
+                            flexGridify.reinitDragAndDrop();
                             break;
                         case "breakpointSelector":
                             flexGridify.resetBreakpoints();

@@ -1,7 +1,7 @@
 import matchElementMedia from "./components/matchElementMedia.mjs";
 import swapElements from "./components/swapElements.mjs";
 import { addProperties, removeProperties } from "./components/addRemoveProperties.mjs";
-import * as css from "./main.css";
+// import * as css from "./main.css";
 
 class FlexGridify {
     constructor(selector = null, userOptions = {}) {
@@ -355,7 +355,12 @@ class FlexGridify {
         this.#dndListenersForCleanup.clear();
 
         Array.from(this.element.children).forEach(child => {
-            child.removeAttribute('draggable');
+            if (this.dragAndDropSelector === "default") {
+                child.removeAttribute('draggable');
+            } else {
+                const draggableTarget = child.querySelector(this.dragAndDropSelector);
+                draggableTarget.removeAttribute('draggable');
+            }
         });
     }
 
@@ -372,8 +377,14 @@ class FlexGridify {
         orderedList.forEach(order => {
             const child = children.find((child_) => parseInt(child_.getAttribute("data-draggable-id")) === order);
             if (child) {
-                child.setAttribute('draggable', 'true');
+                if (this.dragAndDropSelector === "default") {
+                    child.setAttribute('draggable', 'true');
+                } else {
+                    const draggableTarget = child.querySelector(this.dragAndDropSelector);
+                    draggableTarget.setAttribute('draggable', 'true');
+                }
                 child.setAttribute('data-draggable-id', order);
+
                 fragment.appendChild(child);
             }
         });
@@ -469,15 +480,22 @@ class FlexGridify {
 
         orderedList.forEach(order => {
             const child = children[order];
+            if (child) {
+                child.classList.add(this.#fGitem__className);
 
-            child.classList.add(this.#fGitem__className);
-            child.setAttribute('data-draggable-id', order);
-            child.setAttribute('draggable', this.enableDragAndDrop ? 'true' : "false");
+                if (this.dragAndDropSelector === "default") {
+                    child.setAttribute('draggable', this.enableDragAndDrop ? 'true' : "false");
+                } else {
+                    const draggableTarget = child.querySelector(this.dragAndDropSelector);
+                    draggableTarget.setAttribute('draggable', this.enableDragAndDrop ? 'true' : "false");
+                }
+                child.setAttribute('data-draggable-id', order);
 
-            if (this.enableDynamicHeight) {
-                this.#dynamicHeightUpdater(child);
+                if (this.enableDynamicHeight) {
+                    this.#dynamicHeightUpdater(child);
+                }
+                fragment.appendChild(child);
             }
-            fragment.appendChild(child);
         });
 
         // Clear the parent element and re-append reordered children
@@ -558,9 +576,22 @@ class FlexGridify {
     */
     #setupDragAndDropListeners() {
         if (!this.enableDragAndDrop) return;
-        let draggedItem, enteredItem;
+        let draggedElement, draggedItem, enteredItem;
 
         const handleDragStart = (e) => {
+            const target = e.target.closest(`.${this.#fGitem__className}`) ?? e.target;
+            e.dataTransfer.setDragImage(target, e.offsetX, e.offsetY);
+
+            // prevent everything from being dragged, except `dragAndDropSelector`, if `dragAndDropSelector` isn't "default"
+            if (this.dragAndDropSelector !== "default") {
+                const dragAndDropSelectedElement = target.querySelector(this.dragAndDropSelector);
+                if (draggedElement !== dragAndDropSelectedElement && draggedElement !== this.element) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                }
+            }
+
             draggedItem = e.target.closest(`.${this.#fGitem__className}`);
         }
 
@@ -599,14 +630,7 @@ class FlexGridify {
         }
 
         const handleMouseDown = (e) => {
-            const target = e.target.closest(`.${this.#fGitem__className}`) ?? e.target;
-            const dragAndDropSelectedElement = target.querySelector(this.dragAndDropSelector);
-
-            if (e.target !== dragAndDropSelectedElement && e.target !== this.element) {
-                e.preventDefault();
-                e.stopPropagation();
-                e.stopImmediatePropagation();
-            }
+            draggedElement = e.target;
         }
 
         const listeners = [
@@ -619,7 +643,6 @@ class FlexGridify {
             // if dragAndDropSelector is default skip `handleMouseDown` listener
             this.dragAndDropSelector !== "default" ? ["mousedown", handleMouseDown] : null,
         ]
-
 
         listeners.filter(Boolean).forEach(([event, listener]) => {
             this.element.addEventListener(event, listener);

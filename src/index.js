@@ -371,9 +371,11 @@ class FlexGridify {
 
         orderedList.forEach(order => {
             const child = children.find((child_) => parseInt(child_.getAttribute("data-draggable-id")) === order);
-            child.setAttribute('draggable', 'true');
-            child.setAttribute('data-draggable-id', order);
-            fragment.appendChild(child);
+            if (child) {
+                child.setAttribute('draggable', 'true');
+                child.setAttribute('data-draggable-id', order);
+                fragment.appendChild(child);
+            }
         });
 
         this.element.innerHTML = '';
@@ -600,7 +602,7 @@ class FlexGridify {
             const target = e.target.closest(`.${this.#fGitem__className}`) ?? e.target;
             const dragAndDropSelectedElement = target.querySelector(this.dragAndDropSelector);
 
-            if (e.target !== dragAndDropSelectedElement) {
+            if (e.target !== dragAndDropSelectedElement && e.target !== this.element) {
                 e.preventDefault();
                 e.stopPropagation();
                 e.stopImmediatePropagation();

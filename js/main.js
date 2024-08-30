@@ -1,5 +1,3 @@
-import FlexGridify from "../website-tester/trash/src/index.js";
-
 document.addEventListener("DOMContentLoaded", function () {
     (() => {
         /* 1. Code Hook <hoook_Hg5Od206sa> / Observes width & height of an element and displays it */

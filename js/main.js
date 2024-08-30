@@ -357,7 +357,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("handled error");
                 console.error(error);
             }
-
         }
 
         // Related functions: -

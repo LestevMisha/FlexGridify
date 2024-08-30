@@ -28,9 +28,6 @@ body {
 }
 
 .flexGridify-item[draggable=true] {
-    transition-property: opacity, transform;
-    transition-duration: .225s;
-    transition-timing-function: ease-in-out;
     cursor: move !important;
 }
 

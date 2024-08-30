@@ -1,3 +1,5 @@
+import FlexGridify from "../website-tester/trash/src/index.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     (() => {
         /* 1. Code Hook <hoook_Hg5Od206sa> / Observes width & height of an element and displays it */
@@ -311,11 +313,11 @@ document.addEventListener("DOMContentLoaded", function () {
                             value ? flexGridify.connectDynamicObservers() : flexGridify.disconnectDynamicObservers();
                             break;
                         case "enableDragAndDrop":
-                            value ? flexGridify.reinitDragAndDrop() : flexGridify.cleanupDndListeners();
+                            value ? flexGridify.reinitDragAndDrop() : flexGridify.cleanupDragAndDropListeners();
                             break;
                         case "dragAndDropSelector":
                             // reset drag and drop functionality
-                            flexGridify.cleanupDndListeners();
+                            flexGridify.cleanupDragAndDropListeners();
                             flexGridify.reinitDragAndDrop();
                             break;
                         case "breakpointSelector":
@@ -325,9 +327,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             flexGridify[property] = () => {
                                 updateDisplay(value);
                             };
-                            break;
-                        case "onDragAndDropChange":
-                            flexGridify[property] = value;
                             break;
                     }
                 } else {

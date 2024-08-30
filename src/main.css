@@ -11,10 +11,6 @@
     row-gap: var(--flexGridify-row-gap);
 }
 
-.flexGridify-item[draggable=true] {
-    cursor: move !important;
-}
-
 .flexGridify.flexGridify-init {
     opacity: 0;
     visibility: hidden;

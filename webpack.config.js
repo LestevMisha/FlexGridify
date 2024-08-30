@@ -16,10 +16,11 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
         filename: "[name].js",
         library: {
-            name: "FlexGridify",
-            type: "var",
-            export: 'default' //<-- New line
-        }
+            name: 'FlexGridify',
+            type: 'umd',
+            // add this to export your class to the library
+            export: "default"
+        },
     },
 
     module: {

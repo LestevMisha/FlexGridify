@@ -47,6 +47,7 @@ class FlexGridify {
             defaultColumnCount: 1,
             sizeUnit: "em",
             breakpointSelector: "window",
+            dragAndDropSelector: "default",
         }
         // return {
         //     // logQuery: false,
@@ -595,6 +596,16 @@ class FlexGridify {
             removeProperties(draggedItem, Object.keys(this.dragAndDropAnimation));
         }
 
+        const handleMouseDown = (e) => {
+            const target = e.target.closest(`.${this.#fGitem__className}`) ?? e.target;
+            const dragAndDropSelectedElement = target.querySelector(this.dragAndDropSelector);
+
+            if (e.target !== dragAndDropSelectedElement) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            }
+        }
 
         const listeners = [
             ["dragstart", handleDragStart],
@@ -603,9 +614,12 @@ class FlexGridify {
             ["dragover", prevent],
             ["drop", handleDrop],
             ["dragend", handleDragEnd],
+            // if dragAndDropSelector is default skip `handleMouseDown` listener
+            this.dragAndDropSelector !== "default" ? ["mousedown", handleMouseDown] : null,
         ]
 
-        listeners.forEach(([event, listener]) => {
+
+        listeners.filter(Boolean).forEach(([event, listener]) => {
             this.element.addEventListener(event, listener);
             this.#dndListenersForCleanup.set(event, listener);
         });
@@ -663,7 +677,7 @@ class FlexGridify {
     #fG__className
 
     #initializeParameters() {
-        const { gap, sizeUnit, enableSmoothLoading, enableDragAndDrop, dragAndDropAnimation, rememberDragAndDropPosition, marginTop, marginBottom, enableLogQuery, enableDynamicHeight, breakpointSelector, defaultColumnCount, enableResponsiveLayout, columnBreakpoints, onBreakpointChange, onDragAndDropChange } = this.options;
+        const { gap, sizeUnit, enableSmoothLoading, enableDragAndDrop, dragAndDropAnimation, rememberDragAndDropPosition, marginTop, marginBottom, enableLogQuery, enableDynamicHeight, breakpointSelector, dragAndDropSelector, defaultColumnCount, enableResponsiveLayout, columnBreakpoints, onBreakpointChange, onDragAndDropChange } = this.options;
 
         // public parameters
         this.sizeUnit = sizeUnit;
@@ -677,6 +691,7 @@ class FlexGridify {
         this.enableLogQuery = enableLogQuery;
         this.enableDynamicHeight = enableDynamicHeight;
         this.breakpointSelector = breakpointSelector;
+        this.dragAndDropSelector = dragAndDropSelector;
         this.defaultColumnCount = defaultColumnCount;
         this.enableResponsiveLayout = enableResponsiveLayout;
         this.onBreakpointChange = onBreakpointChange;

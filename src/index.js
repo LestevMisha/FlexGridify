@@ -1,7 +1,7 @@
 import matchElementMedia from "./components/matchElementMedia.mjs";
 import swapElements from "./components/swapElements.mjs";
 import { addProperties, removeProperties } from "./components/addRemoveProperties.mjs";
-// import * as css from "./main.css";
+import * as css from "./main.css";
 
 class FlexGridify {
     constructor(selector = null, userOptions = {}) {

@@ -16,7 +16,7 @@
     visibility: hidden;
 }
 
-.flexGridify-item { width: 100%; }
+.flexGridify-item { width: 100%; transition-property: opacity, transform; transition-duration: .225s; transition-timing-function: ease-in-out; }
 .flexGridify-cols-2 .flexGridify-item { width: var(--flexGridify-column-width-calc) }
 .flexGridify-cols-3 .flexGridify-item { width: var(--flexGridify-column-width-calc) }
 .flexGridify-cols-4 .flexGridify-item { width: var(--flexGridify-column-width-calc) }

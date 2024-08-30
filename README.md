@@ -992,7 +992,7 @@ const FlexGridify = new FlexGridify(".your-selector", {
 
 ---
 
-#### **cleanupDndListeners** *Method*
+#### **cleanupDragAndDropListeners** *Method*
 - **Description:** Removes all drag-and-drop listeners from the grid items, disabling drag-and-drop functionality.
 
 ---

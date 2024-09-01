@@ -1,6 +1,6 @@
 {
   "name": "flexgridify",
-  "version": "2.2.9",
+  "version": "2.3.9",
   "description": "A responsive grid masonry based on flex layout",
   "main": "./src/index.js",
   "scripts": {

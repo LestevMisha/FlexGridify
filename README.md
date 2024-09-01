@@ -11,6 +11,7 @@ Inspired by [Gilberton's FlexMasonry](https://github.com/gilbitron/flexmasonry) 
 - **Efficient**: Utilizes CSS flexbox for fast and responsive layouts
 - **Adaptive**: Configurable breakpoints for column adjustments.
 - **Dynamic Height:** Stacks elements with `height: fit-content`
+- **Absolute Positioning:** Library doesn't use absolute positioning to keep layout straight to the point.
 
 [View Demo](https://lestevmisha.github.io/FlexGridify/)
 
@@ -857,6 +858,7 @@ const FlexGridify = new FlexGridify(".your-selector", {
     },
     onDragAndDropChange: null,
     onBreakpointChange: null,
+    onDragStartChange: null,
     gap: 1,
     marginTop: 0,
     marginBottom: 0,
@@ -886,6 +888,7 @@ const FlexGridify = new FlexGridify(".your-selector", {
 
 - **onDragAndDropChange** - A callback function that is triggered when the drag-and-drop order of grid items changes.
 - **onBreakpointChange** - A callback function that is triggered when the grid layout changes due to a breakpoint.
+- **onDragStartChange** - A callback function that is triggered when the drag event started.
 
 #### **Number** *Type*
 
@@ -898,7 +901,7 @@ const FlexGridify = new FlexGridify(".your-selector", {
 
 - **sizeUnit** - The unit of measurement used for spacing and sizing within the grid. Can be either "em" or "px".
 - **breakpointSelector** - Specifies the element (by default "window") that should be used for responsive breakpoints.
-- **dragAndDropSelector** - Specifies the element (by default `flexGridify-item` which is "default") that should be used for drag event.
+- **dragAndDropSelector** - Specifies the element (by default `flexGridify-item` which is "default") that should be used for drag event. Any `svg` tag target is not supported.
 
 ## Methods
 

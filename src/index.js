@@ -40,6 +40,7 @@ class FlexGridify {
             },
             onDragAndDropChange: null,
             onBreakpointChange: null,
+            onDragStartChange: null,
             gap: 1,
             marginTop: 0,
             marginBottom: 0,
@@ -543,20 +544,27 @@ class FlexGridify {
         let draggedElement, draggedItem, enteredItem;
 
         const handleDragStart = (e) => {
-            const target = e.target.closest(`.${this.#fGitem__className}`) ?? e.target;
-            e.dataTransfer.setDragImage(target, e.offsetX, e.offsetY);
+            const childItem = e.target.closest(`.${this.#fGitem__className}`) ?? e.target;
+            const elementSelector = childItem?.querySelector(this.dragAndDropSelector) ?? null;
 
-            // prevent everything from being dragged, except `dragAndDropSelector`, if `dragAndDropSelector` isn't "default"
+            // onDragStartChange callback
+            if (this.onDragStartChange) {
+                this.onDragStartChange(e, childItem, elementSelector, draggedElement);
+            }
+
+            // prevent everything from being dragged, except `dragAndDropSelector` (if `dragAndDropSelector` isn't "default")
             if (this.dragAndDropSelector !== "default") {
-                const dragAndDropSelectedElement = target.querySelector(this.dragAndDropSelector);
-                if (draggedElement !== dragAndDropSelectedElement && draggedElement !== this.element) {
+                // `draggedElement` should be the same as `elementSelector`
+                // `elementSelector` should not contain `draggedElement`
+                // `draggedElement` should not be the parent
+                if ((draggedElement !== elementSelector) && !elementSelector.contains(draggedElement) && draggedElement !== this.element) {
                     e.preventDefault();
                     e.stopPropagation();
                     e.stopImmediatePropagation();
                 }
             }
 
-            draggedItem = e.target.closest(`.${this.#fGitem__className}`);
+            draggedItem = childItem;
         }
 
         const handleDragEnter = (e) => {
@@ -660,9 +668,9 @@ class FlexGridify {
     #fGbreak__className
     #fGinit__className
     #fG__className
-    
+
     #initializeParameters() {
-        const { gap, sizeUnit, enableSmoothLoading, enableDragAndDrop, dragAndDropAnimation, rememberDragAndDropPosition, marginTop, marginBottom, enableLogQuery, enableDynamicHeight, breakpointSelector, dragAndDropSelector, defaultColumnCount, enableResponsiveLayout, columnBreakpoints, onBreakpointChange, onDragAndDropChange } = this.options;
+        const { gap, sizeUnit, enableSmoothLoading, enableDragAndDrop, dragAndDropAnimation, rememberDragAndDropPosition, marginTop, marginBottom, enableLogQuery, enableDynamicHeight, breakpointSelector, dragAndDropSelector, defaultColumnCount, enableResponsiveLayout, columnBreakpoints, onBreakpointChange, onDragAndDropChange, onDragStartChange } = this.options;
 
         // public parameters
         this.sizeUnit = sizeUnit;
@@ -681,6 +689,7 @@ class FlexGridify {
         this.enableResponsiveLayout = enableResponsiveLayout;
         this.onBreakpointChange = onBreakpointChange;
         this.onDragAndDropChange = onDragAndDropChange;
+        this.onDragStartChange = onDragStartChange;
         this.columnBreakpoints = columnBreakpoints;
 
         // * private parameters

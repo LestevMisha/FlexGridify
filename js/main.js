@@ -222,6 +222,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     case "onDragAndDropChange":
                         exitValue = typeof exitValue === "string" ? new Function("order", exitValue) : exitValue;
                         break;
+                    case "onDragStartChange":
+                        const userStartFunction = new Function("e", "childItem", "elementSelector", "draggedElement", exitValue);
+                        exitValue = userStartFunction ? (e, childItem, elementSelector, draggedElement) => { onStartDrag(e, childItem, elementSelector, draggedElement, userStartFunction.bind(this, e, childItem, elementSelector, draggedElement)) } : onStartDrag;
+                        break;
                 }
 
                 updatedParams[key] = exitValue;
@@ -240,6 +244,18 @@ document.addEventListener("DOMContentLoaded", function () {
             fontSizeElement.textContent = getComputedStyle(document.body).fontSize;
             breakpointElement.textContent = flexGridify.getBreakpointQuery("breakpoint");
             columnAmountElement.textContent = `${flexGridify.getBreakpointQuery("columns")} ${flexGridify.getBreakpointQuery("columns") === 1 ? "column" : "columns"}`;
+
+            // Execute additional user callback if provided
+            if (internalCallback) {
+                internalCallback();
+            }
+        }
+
+        function onStartDrag(e, childItem, elementSelector, draggedElement, internalCallback) {
+            const childItemRect = childItem.getBoundingClientRect();
+            if (flexGridify.dragAndDropSelector !== "default") {
+                e.dataTransfer.setDragImage(childItem, childItemRect.width - e.offsetX, e.offsetY);
+            }
 
             // Execute additional user callback if provided
             if (internalCallback) {
@@ -276,6 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Function
                     onDragAndDropChange: (value) => new Function("order", value),
                     onBreakpointChange: (value) => new Function(value),
+                    onDragStartChange: (value) => new Function("e", "childItem", "elementSelector", "draggedElement", value),
 
                     // Number
                     gap: (value) => parseInt(value),
@@ -324,6 +341,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         case "onBreakpointChange":
                             flexGridify[property] = () => {
                                 updateDisplay(value);
+                            };
+                            break;
+                        case "onDragStartChange":
+                            flexGridify[property] = (e, childItem, elementSelector, draggedElement) => {
+                                onStartDrag(e, childItem, elementSelector, draggedElement, value.bind(this, e, childItem, elementSelector, draggedElement));
                             };
                             break;
                     }
